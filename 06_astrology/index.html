@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Celestia — Ethical, empowering astrology and daily cosmic horoscope forecasts based on planetary archetypes.">
+  <title>Celestia — Cosmic Astrology & Ethical Forecasts</title>
+  
+  <!-- Google Fonts: Cinzel Decorative / Cormorant Garamond for mystical headers, Outfit for clean body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Cosmic Background with Canvas Stars & Nebulas -->
+  <div class="stars-container" id="stars-container"></div>
+  <div class="nebula-glow glow-top"></div>
+  <div class="nebula-glow glow-bottom"></div>
+
+  <!-- Main App Shell -->
+  <div class="app-wrapper">
+
+    <!-- Top Navigation Header -->
+    <header class="celestial-header">
+      <div class="brand-container">
+        <div class="brand-crest">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+            <circle cx="12" cy="12" r="4"></circle>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">CELESTIA</h1>
+          <span class="brand-subtitle">Empowering Cosmic Insights</span>
+        </div>
+      </div>
+
+      <div class="header-tools">
+        <div class="cosmic-date-chip" id="cosmic-date-chip">
+          <span class="moon-icon">🌙</span>
+          <span id="header-date">Aligning stars...</span>
+        </div>
+        <button id="ethics-modal-btn" class="btn-ghost" title="View Ethics & Prediction Constraints">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>Ethical Code</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+
+      <!-- Hero Section: Birth Chart Calculator & Sign Explorer -->
+      <section class="hero-section">
+        <div class="hero-badge">✦ Free Will First • Cosmic Forecasting ✦</div>
+        <h2 class="hero-heading">Unveil Your Celestial Alignment</h2>
+        <p class="hero-description">
+          Discover daily transits, career focus, and emotional harmony tailored to your astrological energy. 
+          Built with empowering guidance — no fatalism, 100% agency.
+        </p>
+
+        <!-- Highly Noticeable Step-by-Step Action Guide -->
+        <div class="action-guide-card">
+          <div class="guide-tag">✨ 2 SIMPLE WAYS TO GET YOUR READING</div>
+          <div class="guide-steps-row">
+            <div class="guide-step-item">
+              <span class="step-badge">OPTION A</span>
+              <div class="step-text">
+                <span class="step-primary">Enter your Birth Date below</span>
+                <span class="step-secondary">Auto-detects your Sun Sign & personalized forecast</span>
+              </div>
+            </div>
+            <div class="guide-step-separator">OR</div>
+            <div class="guide-step-item">
+              <span class="step-badge">OPTION B</span>
+              <div class="step-text">
+                <span class="step-primary">Click any Zodiac Sign card</span>
+                <span class="step-secondary">Instant reading for Aries, Taurus, Gemini & all 12 signs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Birth Input Form (Option A) -->
+        <div class="chart-input-card">
+          <div class="form-header-banner">
+            <span class="form-badge">OPTION A</span>
+            <h3 class="form-title">Enter Birth Details for Personalized Horoscope</h3>
+          </div>
+          <form id="astrology-form" class="astro-form">
+            <div class="form-group">
+              <label for="user-name">Your Name</label>
+              <input type="text" id="user-name" placeholder="e.g. Alex" autocomplete="off" maxlength="30">
+            </div>
+
+            <div class="form-group">
+              <label for="birth-date">Date of Birth <span class="required-star">*</span></label>
+              <input type="date" id="birth-date" required>
+            </div>
+
+            <div class="form-group">
+              <label for="birth-time">Birth Time (Optional)</label>
+              <input type="time" id="birth-time">
+            </div>
+
+            <button type="submit" id="calculate-chart-btn" class="btn-cosmic">
+              <span class="btn-sparkle">✦</span>
+              <span>Reveal My Forecast</span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Zodiac Sign Quick Picker Carousel/Grid (Option B) -->
+      <section class="zodiac-picker-section">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <span class="section-badge-option">OPTION B</span>
+            <h3 class="section-title">Instant Sign Explorer</h3>
+          </div>
+          <div class="noticeable-action-prompt">
+            <span class="pulse-dot"></span>
+            <span class="prompt-text">👉 Tap your Zodiac sign below to instantly open today's reading!</span>
+          </div>
+        </div>
+
+        <div class="zodiac-grid" id="zodiac-grid" role="list">
+          <!-- Populated dynamically by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Forecast & Insights Dashboard (Activated upon selection) -->
+      <section class="forecast-section" id="forecast-section">
+        <!-- Active Sign Header Banner -->
+        <div class="active-sign-banner" id="active-sign-banner">
+          <div class="banner-left">
+            <div class="sign-avatar" id="banner-avatar">♈</div>
+            <div>
+              <div class="banner-tag" id="banner-element-badge">Fire Sign</div>
+              <h2 class="banner-title" id="banner-sign-name">Aries</h2>
+              <div class="banner-meta" id="banner-sign-dates">March 21 – April 19 • Ruled by Mars</div>
+            </div>
+          </div>
+          <div class="banner-right">
+            <div class="greeting-user" id="banner-greeting">Daily Cosmic Transit</div>
+            <div class="forecast-date-stamp" id="banner-today-date">Today's Alignment</div>
+          </div>
+        </div>
+
+        <!-- Step 3: Explore Horizons Instruction Bar -->
+        <div class="horizon-instruction-bar">
+          <span class="horizon-icon">🧭</span>
+          <span class="horizon-text"><strong>Explore Your Forecast:</strong> Click any category tab below to view Daily Guidance, Career, Love, Mindset, and Compatibility.</span>
+        </div>
+
+        <!-- Navigation Tabs: Horizons -->
+        <div class="forecast-tabs" role="tablist">
+          <button class="forecast-tab active" data-tab="overview">
+            <span>✨</span> Daily Guidance
+          </button>
+          <button class="forecast-tab" data-tab="career">
+            <span>💼</span> Career & Ambition
+          </button>
+          <button class="forecast-tab" data-tab="love">
+            <span>❤️</span> Love & Connection
+          </button>
+          <button class="forecast-tab" data-tab="mindset">
+            <span>🌿</span> Mind & Spirit
+          </button>
+          <button class="forecast-tab" data-tab="compatibility">
+            <span>💞</span> Compatibility
+          </button>
+        </div>
+
+        <!-- Tab Content Panes -->
+        <div class="tab-panes-container">
+
+          <!-- Pane 1: Daily Overview (3-Pillar Ethical Prediction) -->
+          <div class="tab-pane active" id="pane-overview">
+            <div class="pillars-grid">
+              
+              <!-- Pillar 1: Cosmic Influence -->
+              <div class="pillar-card card-energy">
+                <div class="pillar-icon">🌌</div>
+                <div class="pillar-label">Planetary Theme</div>
+                <h4 class="pillar-title" id="energy-title">Cosmic Vitality</h4>
+                <p class="pillar-body" id="energy-desc">Loading cosmic energy...</p>
+              </div>
+
+              <!-- Pillar 2: The Constructive Challenge -->
+              <div class="pillar-card card-challenge">
+                <div class="pillar-icon">⚖️</div>
+                <div class="pillar-label">The Growth Edge</div>
+                <h4 class="pillar-title" id="challenge-title">Patience & Restraint</h4>
+                <p class="pillar-body" id="challenge-desc">Loading growth edge...</p>
+              </div>
+
+              <!-- Pillar 3: Empowering Free-Will Action -->
+              <div class="pillar-card card-action">
+                <div class="pillar-icon">🧭</div>
+                <div class="pillar-label">Actionable Wisdom</div>
+                <h4 class="pillar-title" id="action-title">Mindful Initiative</h4>
+                <p class="pillar-body" id="action-desc">Loading daily wisdom...</p>
+              </div>
+
+            </div>
+
+            <!-- Lucky Attributes & Cosmic Metrics -->
+            <div class="cosmic-matrix-grid">
+              <div class="matrix-card">
+                <span class="matrix-label">Power Hour</span>
+                <span class="matrix-value" id="val-power-hour">14:00 - 16:00</span>
+              </div>
+              <div class="matrix-card">
+                <span class="matrix-label">Cosmic Color</span>
+                <div class="color-swatch-wrap">
+                  <span class="color-dot" id="val-color-dot"></span>
+                  <span class="matrix-value" id="val-color-name">Crimson Aura</span>
+                </div>
+              </div>
+              <div class="matrix-card">
+                <span class="matrix-label">Harmonic Number</span>
+                <span class="matrix-value matrix-num" id="val-cosmic-num">7</span>
+              </div>
+              <div class="matrix-card">
+                <span class="matrix-label">Daily Companion</span>
+                <span class="matrix-value" id="val-affinity-sign">Leo ♌</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 2: Career & Ambition -->
+          <div class="tab-pane" id="pane-career">
+            <div class="deep-dive-card">
+              <div class="deep-dive-header">
+                <div class="deep-dive-icon">🏛️</div>
+                <div>
+                  <h3 class="deep-dive-title">Workplace Energy & Strategic Focus</h3>
+                  <p class="deep-dive-subtitle">Navigating projects, negotiations, and professional vision</p>
+                </div>
+              </div>
+              <div class="deep-dive-content" id="career-content">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 3: Love & Relationships -->
+          <div class="tab-pane" id="pane-love">
+            <div class="deep-dive-card">
+              <div class="deep-dive-header">
+                <div class="deep-dive-icon">🌹</div>
+                <div>
+                  <h3 class="deep-dive-title">Emotional Currents & Bonds</h3>
+                  <p class="deep-dive-subtitle">Cultivating harmony, communication, and emotional intimacy</p>
+                </div>
+              </div>
+              <div class="deep-dive-content" id="love-content">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 4: Mind & Spirit -->
+          <div class="tab-pane" id="pane-mindset">
+            <div class="deep-dive-card">
+              <div class="deep-dive-header">
+                <div class="deep-dive-icon">🧘</div>
+                <div>
+                  <h3 class="deep-dive-title">Inner Equilibrium & Well-being</h3>
+                  <p class="deep-dive-subtitle">Mindful practices, grounding rituals, and energy preservation</p>
+                </div>
+              </div>
+              <div class="deep-dive-content" id="mindset-content">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Pane 5: Compatibility Explorer -->
+          <div class="tab-pane" id="pane-compatibility">
+            <div class="compatibility-box">
+              <div class="compat-selector-bar">
+                <div class="compat-sign-choice">
+                  <span class="choice-label">Primary Sign</span>
+                  <div class="choice-badge" id="compat-sign-1">Aries ♈</div>
+                </div>
+                <div class="compat-symbol">⚯</div>
+                <div class="compat-sign-choice">
+                  <label for="compat-select" class="choice-label">Compare With</label>
+                  <select id="compat-select" class="compat-dropdown">
+                    <!-- Populated dynamically -->
+                  </select>
+                </div>
+              </div>
+
+              <div class="compat-result-card" id="compat-result">
+                <div class="compat-score-ring">
+                  <div class="score-circle">
+                    <span class="score-val" id="compat-percentage">88%</span>
+                    <span class="score-caption">Resonance</span>
+                  </div>
+                </div>
+                <div class="compat-details">
+                  <h4 class="compat-headline" id="compat-title">Fire & Air Synergy</h4>
+                  <p class="compat-description" id="compat-text">Dynamic balance where enthusiasm feeds visionary ideas.</p>
+                  <div class="compat-tags" id="compat-tags">
+                    <span class="compat-tag">Creative Spark</span>
+                    <span class="compat-tag">Mutual Independence</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Ethical Footer Notice within reading -->
+        <div class="reading-disclaimer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span><strong>Celestia Ethical Commitment:</strong> Predictions are constructive archetypes designed for self-reflection. You possess ultimate free will over all life decisions.</span>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- App Footer -->
+    <footer class="celestial-footer">
+      <p>© 2026 Celestia Astrology • Crafted with Ethical Planetary Archetypes & Pure Free Will</p>
+    </footer>
+
+  </div>
+
+  <!-- Ethical Code Modal -->
+  <div class="modal-overlay hidden" id="ethics-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-title">Our Astrological Code of Ethics</h3>
+        <button id="close-modal-btn" class="btn-close" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="ethic-rule">
+          <div class="rule-icon">🛡️</div>
+          <div>
+            <h4>1. No Medical or Lifespan Predictions</h4>
+            <p>Astrology should never diagnose diseases, forecast longevity, or substitute professional health advice.</p>
+          </div>
+        </div>
+        <div class="ethic-rule">
+          <div class="rule-icon">🦅</div>
+          <div>
+            <h4>2. Agency Over Fatalism</h4>
+            <p>We reject rigid fatalism. Transits describe psychological weather, not immutable destiny. Your actions shape your future.</p>
+          </div>
+        </div>
+        <div class="ethic-rule">
+          <div class="rule-icon">⚖️</div>
+          <div>
+            <h4>3. No Financial or Legal Guarantees</h4>
+            <p>No speculative gamble instructions or legal decrees. Insights focus on personal mindfulness and prudent judgment.</p>
+          </div>
+        </div>
+        <div class="ethic-rule">
+          <div class="rule-icon">🌱</div>
+          <div>
+            <h4>4. Constructive Growth</h4>
+            <p>Every planetary tension is presented with an actionable remedy to turn challenges into personal wisdom.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-understand-btn" class="btn-cosmic btn-full">I Understand & Agree</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="first.js"></script>
+</body>
+</html>
